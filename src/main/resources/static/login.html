@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="./css/style.css" rel="stylesheet"/>
+    <link href="./css/login.css" rel="stylesheet"/>
+    <title>杭电信工线上课程查询</title>
+</head>
+<body>
+    <div class="wrapper slick-slide slick-current slick-active" data-slick-index="3" aria-hidden="false"  tabindex="-1" role="option" aria-describedby="slick-slide03">
+        <div class="clash-card goblin">
+          <div class="clash-card__image clash-card__image--goblin">
+            <h1>杭州电子科技大学信息工程学院线上课程查询系统</h1><br>
+            <h3>2019-2020-2学期</h3>
+          </div>
+          <div class="loginForm">
+              <div class="inputWrapper">
+              <label for="stuId">账号：
+              <input  class="login_input" id="stuId" placeholder="教务账号" type="text">
+            </label>
+        </div><br> 
+        <div class="inputWrapper">
+            <label for="pwd">密码：
+                <input  class="login_input" id="pwd" placeholder="教务密码" type="password">
+              </label>
+            </div>
+            <button class="loginButton" id="loginButton">
+                登录
+            </button>
+          </div>
+        </div>
+      </div>
+     <div class="bg"></div>
+     <div class="footer">出品&nbsp;:&nbsp;团委（新闻中心);&nbsp;&nbsp;技术支持&nbsp;:&nbsp;β-house工作室;&nbsp;&nbsp;数据来源&nbsp;:&nbsp;教务部
+      </div>
+     <script src="./js/jquery-3.4.1.min.js"></script>
+     <script>
+        let stuId=document.querySelector('#stuId');
+        let pwd=document.querySelector('#pwd');
+        let loginBtn=document.querySelector('#loginButton');
+        loginBtn.addEventListener('click',function(){
+            let stuIdVal=stuId.value;
+            let pwdVal=pwd.value;
+            let strId=stuIdVal+"";
+            let toptwo=strId.split('').slice(0,2).join('');
+            let len=strId.split('').length;
+            if(toptwo==='20'||len===5){
+              alert("抱歉，非学生账号无法登录");
+            }else{
+            $.ajax({
+                url:'http://47.92.109.27:888/common/',
+                type:'POST',
+                data:{
+                  studentId:stuIdVal,
+                  password:pwdVal
+                },
+                success:function(res){
+                    console.log(res);
+                    let data=JSON.stringify(res);
+                    console.log(data);
+                    localStorage.setItem('data',data);
+                    localStorage.setItem('stuId',stuIdVal);
+                    localStorage.setItem('pwd',pwdVal);
+                    window.location.href='./index.html';
+                },error:function(error){
+                  if(error.status===500){
+                    alert('账号密码错误，请重试');
+                  }
+                    alert('抱歉，网络错误，请重试');
+                }
+            })
+            }
+        })
+    </script>
+</body>
+</html>
