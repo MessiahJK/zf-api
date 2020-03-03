@@ -1,0 +1,25 @@
+server:
+  port: 888
+http:
+  maxTotal: 20000000
+  defaultMaxPerRoute: 20000000
+  connectTimeout: 5000
+  connectionRequestTimeout: 5000
+  socketTimeout: 5000
+  staleConnectionCheckEnabled: true
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://**.**.**.**:****/zf?serverTimezone=Asia/Shanghai&useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true
+    username: root
+    password: ******
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
